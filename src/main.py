@@ -8,19 +8,28 @@ service = TaskService()
 @app.get("/tasks", 
 response_model=list[Task])
 async def get_tasks():
-    return service.get_all_tasks()
+    result = service.get_all()
+    return result
 
 @app.post("/tasks", 
 response_model=Task)
 async def create_task(task: TaskCreate):
-    return service.create_task(task)
+    result = service.create_task(task)
+    if not result:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return result
 
 @app.put("/tasks/{id}", 
 response_model=Task)
 async def update_task(id: int, task: TaskUpdate):
-    return service.update_task(id, task)
+    result = service.update_task(id, task)
+    if not result:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return result
 
-@app.delete("/tasks/{id}", 
-response_model=Task)
+@app.delete("/tasks/{id}")
 async def delete_task(id: int):
-    return service.delete_task(id)
+    result = service.delete_task(id)
+    if not result:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return {"message": "Task deleted successfully"}
