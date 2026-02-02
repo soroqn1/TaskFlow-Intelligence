@@ -1,0 +1,22 @@
+# Web framework
+fastapi
+uvicorn[standard]
+
+# Validation & Settings
+pydantic
+pydantic-settings
+
+# Background Tasks
+celery
+redis
+
+# HTTP Client (для парсингу зовнішнього API)
+httpx
+
+# ML & Data processing
+pandas
+scikit-learn
+
+# Testing
+pytest
+httpx
