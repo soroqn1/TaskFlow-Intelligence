@@ -12,3 +12,12 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
+  worker:
+    build: .
+    command: celery -A src.worker.celery_app worker --loglevel=info
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - redis
+    env_file:
+      - .env

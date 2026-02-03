@@ -7,7 +7,7 @@ def parse_users_list():
     response = httpx.get("https://jsonplaceholder.typicode.com/users")
     users = response.json()
     df = pd.DataFrame(users)
-    df = df[["id", "name", "username", "email"]]
+    df = df[["id", "name", "email"]]
     df.to_csv("data/users.csv", index=False)
 
     return "Users parsed successfully"
