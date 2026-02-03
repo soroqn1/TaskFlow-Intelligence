@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from src.models.task import Task, TaskCreate, TaskUpdate
 from src.services.task_service import TaskService
 from src.worker.tasks import parse_users_list
+from src.ml.predictor import predict_priority
 
 app = FastAPI(title="TaskFlow Intelligence")
 service = TaskService()
@@ -39,3 +40,8 @@ async def delete_task(id: int):
 async def app_parse_users_list():
     result = parse_users_list.delay()
     return {"task_id": result.id, "status": "Task sent to worker"}
+
+@app.post("/predict")
+async def app_predict_priority(description: str):
+    result = predict_priority(description)
+    return {"priority": result}
